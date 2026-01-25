@@ -5,7 +5,7 @@ use std::io::{self, Read};
 use std::path::PathBuf;
 
 #[derive(Parser)]
-#[command(name = "json-schema-to-luau")]
+#[command(name = "jsonschema-luau")]
 #[command(about = "Convert JSON Schema to Luau type definitions", long_about = None)]
 struct Cli {
     /// Input JSON Schema file (use '-' for stdin)

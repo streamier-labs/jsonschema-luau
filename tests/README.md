@@ -1,6 +1,6 @@
 # Integration Tests
 
-This directory contains comprehensive integration tests for the json-schema-to-luau converter, testing both the library API and CLI functionality.
+This directory contains comprehensive integration tests for the jsonschema-luau converter, testing both the library API and CLI functionality.
 
 ## Test Files
 

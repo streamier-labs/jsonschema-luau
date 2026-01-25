@@ -1,11 +1,11 @@
-# Contributing to json-schema-to-luau
+# Contributing to jsonschema-luau
 
 Thank you for your interest in contributing! This document provides guidelines and instructions for contributing to the project.
 
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/amirfarzamnia/json-schema-to-luau.git`
+2. Clone your fork: `git clone https://github.com/amirfarzamnia/jsonschema-luau.git`
 3. Create a new branch: `git checkout -b feature/your-feature-name`
 4. Make your changes
 5. Run tests: `cargo test`
@@ -49,7 +49,7 @@ cargo run -- input.json -o output.luau
 
 # Or build and run
 cargo build --release
-./target/release/json-schema-to-luau input.json
+./target/release/jsonschema-luau input.json
 ```
 
 ## Code Style

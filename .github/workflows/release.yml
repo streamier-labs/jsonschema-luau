@@ -18,25 +18,25 @@ jobs:
       matrix:
         include:
           - os: windows-latest
-            artifact-name: json-schema-to-luau-windows-x86_64
+            artifact-name: jsonschema-luau-windows-x86_64
             cargo-target: x86_64-pc-windows-msvc
 
           - os: ubuntu-latest
-            artifact-name: json-schema-to-luau-linux-x86_64
+            artifact-name: jsonschema-luau-linux-x86_64
             cargo-target: x86_64-unknown-linux-gnu
 
           - os: ubuntu-latest
-            artifact-name: json-schema-to-luau-linux-aarch64
+            artifact-name: jsonschema-luau-linux-aarch64
             cargo-target: aarch64-unknown-linux-gnu
             linker: aarch64-linux-gnu-gcc
             linker-package: gcc-aarch64-linux-gnu
 
           - os: macos-latest
-            artifact-name: json-schema-to-luau-macos-x86_64
+            artifact-name: jsonschema-luau-macos-x86_64
             cargo-target: x86_64-apple-darwin
 
           - os: macos-latest
-            artifact-name: json-schema-to-luau-macos-aarch64
+            artifact-name: jsonschema-luau-macos-aarch64
             cargo-target: aarch64-apple-darwin
 
     steps:
@@ -77,12 +77,12 @@ jobs:
           mkdir -p staging
 
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            cp "output/${{ matrix.cargo-target }}/release/json-schema-to-luau.exe" staging/
+            cp "output/${{ matrix.cargo-target }}/release/jsonschema-luau.exe" staging/
             cd staging
             7z a "../${{ matrix.artifact-name }}.zip" *
           else
-            cp "output/${{ matrix.cargo-target }}/release/json-schema-to-luau" staging/
-            chmod +x staging/json-schema-to-luau
+            cp "output/${{ matrix.cargo-target }}/release/jsonschema-luau" staging/
+            chmod +x staging/jsonschema-luau
             cd staging
             zip "../${{ matrix.artifact-name }}.zip" *
           fi

@@ -1,9 +1,9 @@
-# JSON Schema to Luau
+# jsonschema-luau
 
-[<img alt="Crates.io" src="https://img.shields.io/crates/v/json-schema-to-luau?style=flat-square&logo=rust" height="20">](https://crates.io/crates/json-schema-to-luau)
-[<img alt="docs.rs" src="https://img.shields.io/docsrs/json-schema-to-luau?style=flat-square&logo=docs.rs" height="20">](https://docs.rs/json-schema-to-luau)
+[<img alt="Crates.io" src="https://img.shields.io/crates/v/jsonschema-luau?style=flat-square&logo=rust" height="20">](https://crates.io/crates/jsonschema-luau)
+[<img alt="docs.rs" src="https://img.shields.io/docsrs/jsonschema-luau?style=flat-square&logo=docs.rs" height="20">](https://docs.rs/jsonschema-luau)
 
-**Convert JSON Schema to Luau type definitions with full support for constraints and advanced schema features.**
+**Convert JSON Schemas to Luau type definitions with full support for constraints and advanced schema features.**
 
 ---
 
@@ -21,31 +21,31 @@
 
 ## ⬇️ Installation
 
-You can install `json-schema-to-luau` in several ways, depending on how you plan to use it.
+You can install `jsonschema-luau` in several ways, depending on how you plan to use it.
 
 ### 🚀 Rokit (Recommended for Roblox/Luau projects)
 
 If you use **[Rokit](https://github.com/rojo-rbx/rokit)** for toolchain management, this is the easiest and most reproducible way to install the CLI.
 
 ```bash
-rokit add amirfarzamnia/json-schema-to-luau
+rokit add amirfarzamnia/jsonschema-luau
 ```
 
-This will install `json-schema-to-luau` and pin it in your `rokit.toml`, ensuring consistent versions across your team and CI.
+This will install `jsonschema-luau` and pin it in your `rokit.toml`, ensuring consistent versions across your team and CI.
 
 You can also install it globally.
 
 ```bash
-rokit add amirfarzamnia/json-schema-to-luau --global
+rokit add amirfarzamnia/jsonschema-luau --global
 ```
 
-This will install `json-schema-to-luau` globally, making it available system-wide.
+This will install `jsonschema-luau` globally, making it available system-wide.
 
 ### 🧱 GitHub Releases (Pre-built CLI Binaries)
 
 Pre-compiled binaries for Linux, macOS, and Windows are available on the **GitHub Releases** page:
 
-👉 [https://github.com/amirfarzamnia/json-schema-to-luau/releases](https://github.com/amirfarzamnia/json-schema-to-luau/releases)
+👉 [https://github.com/amirfarzamnia/jsonschema-luau/releases](https://github.com/amirfarzamnia/jsonschema-luau/releases)
 
 This is the fastest way to get the CLI if you don’t want to install Rust or Rokit.
 
@@ -54,17 +54,17 @@ This is the fastest way to get the CLI if you don’t want to install Rust or Ro
 To install the command-line interface globally using Cargo:
 
 ```bash
-cargo install json-schema-to-luau
+cargo install jsonschema-luau
 ```
 
 This requires a Rust toolchain to be installed.
 
 ### 📚 Cargo (Library)
 
-To use `json-schema-to-luau` as a Rust library in your project:
+To use `jsonschema-luau` as a Rust library in your project:
 
 ```bash
-cargo add json-schema-to-luau
+cargo add jsonschema-luau
 ```
 
 ---
@@ -75,13 +75,13 @@ cargo add json-schema-to-luau
 
 ```bash
 # Convert a file and output to another file
-json-schema-to-luau schema.json -o types.luau
+jsonschema-luau schema.json -o types.luau
 
 # Read schema from standard input
-cat schema.json | json-schema-to-luau - -o types.luau
+cat schema.json | jsonschema-luau - -o types.luau
 
 # Specify a custom type name (defaults to 'Root')
-json-schema-to-luau schema.json --type-name MyCustomType
+jsonschema-luau schema.json --type-name MyCustomType
 ```
 
 ### Rust Library

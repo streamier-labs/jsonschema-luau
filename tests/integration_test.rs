@@ -56,7 +56,7 @@ fn test_library_convert_schema_with_custom_name() {
 fn test_cli_basic_conversion() {
     // Build the project first to ensure the binary exists
     let build_output = Command::new("cargo")
-        .args(&["build", "--bin", "json-schema-to-luau"])
+        .args(&["build", "--bin", "jsonschema-luau"])
         .output()
         .expect("Failed to build the project");
 
@@ -68,13 +68,7 @@ fn test_cli_basic_conversion() {
 
     // Run the CLI tool
     let output = Command::new("cargo")
-        .args(&[
-            "run",
-            "--bin",
-            "json-schema-to-luau",
-            "--",
-            TEST_SCHEMA_PATH,
-        ])
+        .args(&["run", "--bin", "jsonschema-luau", "--", TEST_SCHEMA_PATH])
         .output()
         .expect("Failed to execute CLI command");
 
@@ -106,7 +100,7 @@ fn test_cli_with_custom_type_name() {
         .args(&[
             "run",
             "--bin",
-            "json-schema-to-luau",
+            "jsonschema-luau",
             "--",
             TEST_SCHEMA_PATH,
             "--type-name",
@@ -143,7 +137,7 @@ fn test_cli_with_output_file() {
         .args(&[
             "run",
             "--bin",
-            "json-schema-to-luau",
+            "jsonschema-luau",
             "--",
             TEST_SCHEMA_PATH,
             "--output",
