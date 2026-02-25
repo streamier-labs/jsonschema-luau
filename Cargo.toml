@@ -14,8 +14,8 @@ readme = "README.md"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 thiserror = "2.0.17"
-clap = { version = "4.5", features = ["derive"] }
-convert_case = "0.10.0"
+clap = { version = "4.5.60", features = ["derive"] }
+convert_case = "0.11.0"
 
 [[bin]]
 name = "jsonschema-luau"
