@@ -10,31 +10,42 @@ permissions:
 
 jobs:
   build:
-    name: Build binary (${{ matrix.artifact-name }})
+    name: Build ${{ matrix.artifact-name }}
     runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
         include:
+          # Windows x86_64
           - os: windows-latest
             artifact-name: jsonschema-luau-windows-x86_64
             cargo-target: x86_64-pc-windows-msvc
 
-          - os: ubuntu-latest
-            artifact-name: jsonschema-luau-linux-x86_64
-            cargo-target: x86_64-unknown-linux-gnu
+          # Windows ARM64
+          - os: windows-latest
+            artifact-name: jsonschema-luau-windows-aarch64
+            cargo-target: aarch64-pc-windows-msvc
 
+          # Linux x86_64 (Static Musl - highly recommended)
+          - os: ubuntu-latest
+            artifact-name: jsonschema-luau-linux-x86_64-static
+            cargo-target: x86_64-unknown-linux-musl
+            musl-tools: true
+
+          # Linux ARM64
           - os: ubuntu-latest
             artifact-name: jsonschema-luau-linux-aarch64
             cargo-target: aarch64-unknown-linux-gnu
             linker: aarch64-linux-gnu-gcc
             linker-package: gcc-aarch64-linux-gnu
 
+          # macOS Intel
           - os: macos-latest
             artifact-name: jsonschema-luau-macos-x86_64
             cargo-target: x86_64-apple-darwin
 
+          # macOS Apple Silicon
           - os: macos-latest
             artifact-name: jsonschema-luau-macos-aarch64
             cargo-target: aarch64-apple-darwin
@@ -47,44 +58,41 @@ jobs:
         with:
           targets: ${{ matrix.cargo-target }}
 
-      - name: Install linker (Linux aarch64)
-        if: ${{ matrix.linker-package != '' }}
+      - name: Install Dependencies (Linux)
+        if: runner.os == 'Linux'
         run: |
-          sudo apt update
-          sudo apt install -y ${{ matrix.linker-package }}
-
-          mkdir -p .cargo
-          cat > .cargo/config.toml <<EOF
-          [target.${{ matrix.cargo-target }}]
-          linker = "${{ matrix.linker }}"
-          EOF
-
-      - name: Generate Cargo.lock if needed
-        shell: bash
-        run: |
-          if [ ! -f Cargo.lock ]; then
-            cargo generate-lockfile
+          sudo apt-get update
+          if [ "${{ matrix.musl-tools }}" = "true" ]; then
+            sudo apt-get install -y musl-tools
+          fi
+          if [ "${{ matrix.linker-package }}" != "" ]; then
+            sudo apt-get install -y ${{ matrix.linker-package }}
+            mkdir -p .cargo
+            echo "[target.${{ matrix.cargo-target }}]" > .cargo/config.toml
+            echo "linker = \"${{ matrix.linker }}\"" >> .cargo/config.toml
           fi
 
       - name: Build binary
+        run: cargo build --locked --release --target ${{ matrix.cargo-target }}
         env:
           CARGO_TARGET_DIR: output
-        run: cargo build --locked --release --target ${{ matrix.cargo-target }}
 
       - name: Package binary
         shell: bash
         run: |
           mkdir -p staging
-
-          if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            cp "output/${{ matrix.cargo-target }}/release/jsonschema-luau.exe" staging/
-            cd staging
-            7z a "../${{ matrix.artifact-name }}.zip" *
+          # Determine the binary path based on OS
+          if [[ "${{ matrix.os }}" == *"windows"* ]]; then
+            BIN_NAME="jsonschema-luau.exe"
+            SRC="output/${{ matrix.cargo-target }}/release/$BIN_NAME"
+            cp "$SRC" staging/
+            cd staging && 7z a "../${{ matrix.artifact-name }}.zip" *
           else
-            cp "output/${{ matrix.cargo-target }}/release/jsonschema-luau" staging/
-            chmod +x staging/jsonschema-luau
-            cd staging
-            zip "../${{ matrix.artifact-name }}.zip" *
+            BIN_NAME="jsonschema-luau"
+            SRC="output/${{ matrix.cargo-target }}/release/$BIN_NAME"
+            cp "$SRC" staging/
+            chmod +x "staging/$BIN_NAME"
+            cd staging && zip "../${{ matrix.artifact-name }}.zip" *
           fi
 
       - name: Upload build artifact
@@ -97,14 +105,11 @@ jobs:
     name: Publish GitHub Release
     runs-on: ubuntu-latest
     needs: build
-
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
-
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            **/*.zip
+          files: "**/*.zip"
           generate_release_notes: true
