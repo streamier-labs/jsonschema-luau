@@ -49,5 +49,8 @@ _:
     # Nix Static Analysis
     deadnix.enable = true;
     statix.enable = true;
+
+    # Rust Quality Checks
+    clippy.enable = true;
   };
 }
