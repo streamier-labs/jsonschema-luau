@@ -28,7 +28,7 @@ You can install `jsonschema-luau` in several ways, depending on how you plan to 
 If you use **[Rokit](https://github.com/rojo-rbx/rokit)** for toolchain management, this is the easiest and most reproducible way to install the CLI.
 
 ```bash
-rokit add amirfarzamnia/jsonschema-luau
+rokit add streamier-labs/jsonschema-luau
 ```
 
 This will install `jsonschema-luau` and pin it in your `rokit.toml`, ensuring consistent versions across your team and CI.
@@ -36,7 +36,7 @@ This will install `jsonschema-luau` and pin it in your `rokit.toml`, ensuring co
 You can also install it globally.
 
 ```bash
-rokit add amirfarzamnia/jsonschema-luau --global
+rokit add streamier-labs/jsonschema-luau --global
 ```
 
 This will install `jsonschema-luau` globally, making it available system-wide.
@@ -45,7 +45,7 @@ This will install `jsonschema-luau` globally, making it available system-wide.
 
 Pre-compiled binaries for Linux, macOS, and Windows are available on the **GitHub Releases** page:
 
-👉 [https://github.com/amirfarzamnia/jsonschema-luau/releases](https://github.com/amirfarzamnia/jsonschema-luau/releases)
+👉 [https://github.com/streamier-labs/jsonschema-luau/releases](https://github.com/streamier-labs/jsonschema-luau/releases)
 
 This is the fastest way to get the CLI if you don’t want to install Rust or Rokit.
 
