@@ -18,10 +18,6 @@ _:
     enable = true;
     config.programs = {
       nixfmt.enable = true;
-      stylua = {
-        enable = true;
-        includes = [ "*.luau" ];
-      };
       taplo.enable = true;
       yamlfmt.enable = true;
       rustfmt.enable = true;

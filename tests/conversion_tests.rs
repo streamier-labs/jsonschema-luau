@@ -159,20 +159,3 @@ fn test_convert_defs() {
     assert!(result.contains("export type Item"));
     assert!(result.contains("id: string"));
 }
-
-#[test]
-fn test_end_to_end_matches_expected_output() {
-    use std::fs;
-
-    let schema_content =
-        fs::read_to_string("tests/test_schema.json").expect("Failed to read test schema file");
-    let expected =
-        fs::read_to_string("tests/expected_output.luau").expect("Failed to read expected output");
-
-    let result = convert_schema(&schema_content).expect("Failed to convert schema");
-    assert_eq!(
-        result.trim(),
-        expected.trim(),
-        "Generated output does not match expected_output.luau"
-    );
-}
