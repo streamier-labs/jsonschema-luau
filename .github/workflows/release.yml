@@ -1,18 +1,14 @@
 name: Release
-
 on:
   push:
     tags:
       - "v*"
-
 permissions:
   contents: write
-
 jobs:
   build:
     name: Build ${{ matrix.artifact-name }}
     runs-on: ${{ matrix.os }}
-
     strategy:
       fail-fast: false
       matrix:
@@ -21,43 +17,35 @@ jobs:
           - os: windows-latest
             artifact-name: jsonschema-luau-windows-x86_64
             cargo-target: x86_64-pc-windows-msvc
-
           # Windows ARM64
           - os: windows-latest
             artifact-name: jsonschema-luau-windows-aarch64
             cargo-target: aarch64-pc-windows-msvc
-
           # Linux x86_64 (Static Musl - highly recommended)
           - os: ubuntu-latest
             artifact-name: jsonschema-luau-linux-x86_64-static
             cargo-target: x86_64-unknown-linux-musl
             musl-tools: true
-
           # Linux ARM64
           - os: ubuntu-latest
             artifact-name: jsonschema-luau-linux-aarch64
             cargo-target: aarch64-unknown-linux-gnu
             linker: aarch64-linux-gnu-gcc
             linker-package: gcc-aarch64-linux-gnu
-
           # macOS Intel
           - os: macos-latest
             artifact-name: jsonschema-luau-macos-x86_64
             cargo-target: x86_64-apple-darwin
-
           # macOS Apple Silicon
           - os: macos-latest
             artifact-name: jsonschema-luau-macos-aarch64
             cargo-target: aarch64-apple-darwin
-
     steps:
       - uses: actions/checkout@v4
-
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.cargo-target }}
-
       - name: Install Dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
@@ -71,12 +59,10 @@ jobs:
             echo "[target.${{ matrix.cargo-target }}]" > .cargo/config.toml
             echo "linker = \"${{ matrix.linker }}\"" >> .cargo/config.toml
           fi
-
       - name: Build binary
         run: cargo build --locked --release --target ${{ matrix.cargo-target }}
         env:
           CARGO_TARGET_DIR: output
-
       - name: Package binary
         shell: bash
         run: |
@@ -94,13 +80,11 @@ jobs:
             chmod +x "staging/$BIN_NAME"
             cd staging && zip "../${{ matrix.artifact-name }}.zip" *
           fi
-
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }}
           path: ${{ matrix.artifact-name }}.zip
-
   release:
     name: Publish GitHub Release
     runs-on: ubuntu-latest

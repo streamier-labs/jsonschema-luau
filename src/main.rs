@@ -1,51 +1,39 @@
-use clap::Parser;
-use json_schema_to_luau::{convert_schema, convert_schema_with_name};
-use std::fs;
-use std::io::{self, Read};
-use std::path::PathBuf;
+//! JSON Schema to Luau type definition converter.
+//!
+//! This binary converts JSON Schema documents to Luau type definitions.
+//!
+//! # Usage Examples
+//!
+//! Generate Luau types to stdout:
+//! ```sh
+//! jsonschema-luau schema.json
+//! ```
+//!
+//! Write output to a file:
+//! ```sh
+//! jsonschema-luau schema.json types.luau
+//! ```
+//!
+//! Read from stdin:
+//! ```sh
+//! cat schema.json | jsonschema-luau
+//! ```
+//!
+//! Read from stdin and write to a file:
+//! ```sh
+//! cat schema.json | jsonschema-luau -o types.luau
+//! ```
+//!
+//! Use a custom root type name:
+//! ```sh
+//! jsonschema-luau schema.json -t MyType
+//! ```
 
-#[derive(Parser)]
-#[command(name = "jsonschema-luau")]
-#[command(about = "Convert JSON Schema to Luau type definitions", long_about = None)]
-struct Cli {
-    /// Input JSON Schema file (use '-' for stdin)
-    #[arg(value_name = "INPUT")]
-    input: String,
+use json_schema_to_luau::cli;
 
-    /// Output file (defaults to stdout)
-    #[arg(short, long, value_name = "FILE")]
-    output: Option<PathBuf>,
-
-    /// Custom type name for the root schema
-    #[arg(short, long, value_name = "NAME")]
-    type_name: Option<String>,
-}
-
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let cli = Cli::parse();
-
-    // Read input
-    let input_content = if cli.input == "-" {
-        let mut buffer = String::new();
-        io::stdin().read_to_string(&mut buffer)?;
-        buffer
-    } else {
-        fs::read_to_string(&cli.input)?
-    };
-
-    // Convert schema
-    let luau_types = if let Some(type_name) = cli.type_name {
-        convert_schema_with_name(&input_content, &type_name)?
-    } else {
-        convert_schema(&input_content)?
-    };
-
-    // Write output
-    if let Some(output_path) = cli.output {
-        fs::write(output_path, luau_types)?;
-    } else {
-        println!("{}", luau_types);
+fn main() {
+    if let Err(e) = cli::run() {
+        eprintln!("Error: {}", e);
+        std::process::exit(1);
     }
-
-    Ok(())
 }
