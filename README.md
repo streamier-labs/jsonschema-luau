@@ -74,7 +74,7 @@ rokit add streamier-labs/jsonschema-luau --global
 
 ### GitHub Releases
 
-Pre-compiled binaries for Linux, macOS, and Windows (`aarch64` and `x86_64`) are available on the [GitHub Releases](https://www.google.com/search?q=https://github.com/streamier-labs/jsonschema-luau/releases) page.
+Pre-compiled binaries for Linux, macOS, and Windows (`aarch64` and `x86_64`) are available on the [GitHub Releases](https://github.com/streamier-labs/jsonschema-luau/releases) page.
 
 ### Cargo
 
