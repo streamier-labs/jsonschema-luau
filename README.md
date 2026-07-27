@@ -1,7 +1,10 @@
+<!-- markdownlint-disable MD013 -->
+
 # jsonschema-luau
 
-[<img alt="Crates.io" src="https://img.shields.io/crates/v/jsonschema-luau?style=flat-square&logo=rust" height="20">](https://crates.io/crates/jsonschema-luau)
-[<img alt="docs.rs" src="https://img.shields.io/docsrs/jsonschema-luau?style=flat-square&logo=docs.rs" height="20">](https://docs.rs/jsonschema-luau)
+![GitHub Release Date](https://img.shields.io/github/release-date/streamier-labs/jsonschema-luau?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=0B192C&color=FF6500)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/streamier-labs/jsonschema-luau/ci.yml?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=0B192C&color=FF6500)
+![GitHub License](https://img.shields.io/github/license/streamier-labs/jsonschema-luau?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=0B192C&color=FF6500)
 
 **Convert JSON Schemas to Luau type definitions with full support for constraints and advanced schema features.**
 
@@ -9,13 +12,13 @@
 
 ## ✨ Features
 
-- ✅ **Full JSON Schema support** (objects, arrays, primitives, enums, const)
-- ✅ Handles **`$ref`, `definitions`, and `$defs`**
-- ✅ Composition support (`allOf`, `anyOf`, `oneOf`)
-- ✅ **Constraints preserved** as Luau comments (ranges, string limits, patterns, array bounds)
-- ✅ Required/optional property handling
-- ✅ CLI and library usage
-- ✅ Type-safe conversion with clear errors
+- [x] **Full JSON Schema support** (objects, arrays, primitives, enums, const)
+- [x] Handles **`$ref`, `definitions`, and `$defs`**
+- [x] Composition support (`allOf`, `anyOf`, `oneOf`)
+- [x] **Constraints preserved** as Luau comments (ranges, string limits, patterns, array bounds)
+- [x] Required/optional property handling
+- [x] CLI and library usage
+- [x] Type-safe conversion with clear errors
 
 ---
 
@@ -160,8 +163,8 @@ export type T = A | B
 
 ### `allOf` (Intersection / Merging)
 
-1.  **If the parent schema defines properties**, `allOf` members are **merged** into the parent object type.
-2.  **Otherwise**, it is converted to a Luau intersection: `export type T = A & B`.
+1. **If the parent schema defines properties**, `allOf` members are **merged** into the parent object type.
+2. **Otherwise**, it is converted to a Luau intersection: `export type T = A & B`.
 
 ---
 
@@ -225,15 +228,15 @@ Luau has a simpler type system than JSON Schema. The following features degrade 
 
 ## 💡 Troubleshooting & FAQ
 
-#### “Why is my numeric enum turned into `number`?”
+### “Why is my numeric enum turned into `number`?”
 
 Luau does not support numeric literal types (e.g., `1 | 2 | 3`). Numeric enums from JSON Schema must degrade to the base type `number`.
 
-#### “Why does my object turn into `{ [string]: any }`?”
+### “Why does my object turn into `{ [string]: any }`?”
 
 This typically happens when the schema is an object that allows arbitrary properties but does not explicitly declare any of its own (`properties` is absent or empty, and `additionalProperties` is the default `true`).
 
-#### “Why is a type inlined instead of exported?”
+### “Why is a type inlined instead of exported?”
 
 Only types resolved via a `$ref` to a root-level definition (`#/definitions/Name` or `#/$defs/Name`) are exported as named types. All other complex types (like nested objects or arrays) are intentionally inlined for conciseness.
 
@@ -266,4 +269,4 @@ let luau = converter.convert_with_name(&schema, "MyType")?;
 
 ## 📄 License
 
-[MIT](https://www.google.com/search?q=LICENSE) License
+[MIT](LICENSE) License
