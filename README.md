@@ -2,9 +2,9 @@
 
 # jsonschema-luau
 
-![GitHub Release Date](https://img.shields.io/github/release-date/streamier-labs/jsonschema-luau?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=0B192C&color=FF6500)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/streamier-labs/jsonschema-luau/ci.yml?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=0B192C&color=FF6500)
-![GitHub License](https://img.shields.io/github/license/streamier-labs/jsonschema-luau?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=0B192C&color=FF6500)
+![GitHub Release Date](https://img.shields.io/github/release-date/streamier-labs/jsonschema-luau?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=111844&color=4B5694)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/streamier-labs/jsonschema-luau/ci.yml?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=111844&color=4B5694)
+![GitHub License](https://img.shields.io/github/license/streamier-labs/jsonschema-luau?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=111844&color=4B5694)
 
 Convert JSON Schemas to Luau type definitions with full support for constraints and advanced schema features.
 
