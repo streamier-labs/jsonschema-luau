@@ -6,65 +6,85 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/streamier-labs/jsonschema-luau/ci.yml?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=0B192C&color=FF6500)
 ![GitHub License](https://img.shields.io/github/license/streamier-labs/jsonschema-luau?style=flat-square&logo=github&logoColor=FFFFFF&labelColor=0B192C&color=FF6500)
 
-**Convert JSON Schemas to Luau type definitions with full support for constraints and advanced schema features.**
+Convert JSON Schemas to Luau type definitions with full support for constraints and advanced schema features.
 
 ---
 
-## ✨ Features
+## Features
 
-- [x] **Full JSON Schema support** (objects, arrays, primitives, enums, const)
-- [x] Handles **`$ref`, `definitions`, and `$defs`**
-- [x] Composition support (`allOf`, `anyOf`, `oneOf`)
-- [x] **Constraints preserved** as Luau comments (ranges, string limits, patterns, array bounds)
-- [x] Required/optional property handling
-- [x] CLI and library usage
-- [x] Type-safe conversion with clear errors
+- **Full JSON Schema support** (objects, arrays, primitives, enums, const)
+- Handles **`$ref`**, **`definitions`**, and **`$defs`**
+- Composition support (**`allOf`**, **`anyOf`**, **`oneOf`**)
+- **Constraints preserved** as Luau comments (ranges, string limits, patterns, array bounds)
+- Required and optional property handling
+- Available both as a CLI tool and a Rust library
+- Type-safe conversion with clear error handling
 
 ---
 
-## ⬇️ Installation
+## Installation
 
-You can install `jsonschema-luau` in several ways, depending on how you plan to use it.
+### Package Managers (npm / npx)
 
-### 🚀 Rokit (Recommended for Roblox/Luau projects)
-
-If you use **[Rokit](https://github.com/rojo-rbx/rokit)** for toolchain management, this is the easiest and most reproducible way to install the CLI.
+Install globally or execute instantly via npm:
 
 ```bash
-rokit add streamier-labs/jsonschema-luau
+# Run directly without manual installation
+npx @streamier/jsonschema-luau --help
+
+# Or install globally
+npm install -g @streamier/jsonschema-luau
 ```
 
-This will install `jsonschema-luau` and pin it in your `rokit.toml`, ensuring consistent versions across your team and CI.
+### Shell Install Script (macOS / Linux / Windows)
 
-You can also install it globally.
+You can install pre-built binaries directly using the interactive install scripts generated via `cargo-dist`:
+
+**Linux & macOS:**
 
 ```bash
+curl --proto '=https' --tlsv1.2 -sSf [https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.sh](https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.sh) | sh
+```
+
+**Windows (PowerShell):**
+
+```powershell
+powershell -c "irm [https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.ps1](https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.ps1) | iex"
+```
+
+### Toolchain Managers (Mise / Rokit)
+
+If you use toolchain managers for Roblox/Luau projects, this is the best way to ensure consistent tool versions across teams and CI workflows.
+
+**Mise:**
+
+```bash
+mise use github:streamier-labs/jsonschema-luau
+```
+
+**Rokit:**
+
+```bash
+# Add to current project (pinned to rokit.toml)
+rokit add streamier-labs/jsonschema-luau
+
+# Install globally
 rokit add streamier-labs/jsonschema-luau --global
 ```
 
-This will install `jsonschema-luau` globally, making it available system-wide.
+### GitHub Releases
 
-### 🧱 GitHub Releases (Pre-built CLI Binaries)
+Pre-compiled binaries for Linux, macOS, and Windows (`aarch64` and `x86_64`) are available on the [GitHub Releases](https://www.google.com/search?q=https://github.com/streamier-labs/jsonschema-luau/releases) page.
 
-Pre-compiled binaries for Linux, macOS, and Windows are available on the **GitHub Releases** page:
+### Cargo
 
-👉 [https://github.com/streamier-labs/jsonschema-luau/releases](https://github.com/streamier-labs/jsonschema-luau/releases)
-
-This is the fastest way to get the CLI if you don’t want to install Rust or Rokit.
-
-### 📦 Cargo (CLI)
-
-To install the command-line interface globally using Cargo:
+**CLI Tool:**
 
 ```bash
 cargo install jsonschema-luau
 ```
 
-This requires a Rust toolchain to be installed.
-
-### 📚 Cargo (Library)
-
-To use `jsonschema-luau` as a Rust library in your project:
+**Rust Library Dependency:**
 
 ```bash
 cargo add jsonschema-luau
@@ -72,7 +92,7 @@ cargo add jsonschema-luau
 
 ---
 
-## 🚀 Usage
+## Usage
 
 ### Command Line Interface (CLI)
 
@@ -83,7 +103,7 @@ jsonschema-luau schema.json -o types.luau
 # Read schema from standard input
 cat schema.json | jsonschema-luau - -o types.luau
 
-# Specify a custom type name (defaults to 'Root')
+# Specify a custom root type name (defaults to 'Root')
 jsonschema-luau schema.json --type-name MyCustomType
 ```
 
@@ -124,9 +144,9 @@ export type Root = {
 
 ---
 
-## 🛠️ Luau Type Mapping & Behavior
+## Luau Type Mapping & Behavior
 
-The converter maps JSON Schema concepts to the closest viable Luau types. This is crucial as **Luau is not TypeScript** and has different type system limitations.
+The converter maps JSON Schema concepts to the closest viable Luau types. Because **Luau is not TypeScript**, it has different type system capabilities and limitations.
 
 ### Primitive Mapping
 
@@ -151,7 +171,7 @@ The converter maps JSON Schema concepts to the closest viable Luau types. This i
 
 ---
 
-## 🧩 Composition Handling
+## Composition Handling
 
 ### `anyOf` / `oneOf` (Union)
 
@@ -163,12 +183,12 @@ export type T = A | B
 
 ### `allOf` (Intersection / Merging)
 
-1. **If the parent schema defines properties**, `allOf` members are **merged** into the parent object type.
-2. **Otherwise**, it is converted to a Luau intersection: `export type T = A & B`.
+1. **If the parent schema defines properties**: `allOf` members are **merged** into the parent object type.
+2. **Otherwise**: Converted to a Luau intersection (`export type T = A & B`).
 
 ---
 
-## 📝 Examples
+## Code Examples
 
 ### Object with Constraints
 
@@ -208,65 +228,90 @@ export type Person = {
 }
 ```
 
-_Note: Referenced types like `Person` are always exported as named types._
+> [!NOTE]
+> Referenced types like `Person` are always exported as standalone named types.
 
 ---
 
-## 🛑 Limitations
+## Limitations
 
-Luau has a simpler type system than JSON Schema. The following features degrade gracefully (i.e., they are ignored or simplified):
+Luau features a simpler type system than JSON Schema. The following features degrade gracefully:
 
-- **Tuple schemas** (`items: [A, B, C]`) → _Not supported_.
-- **Conditionals** (`if` / `then` / `else`) → _Ignored_.
-- **Dependencies** (`dependencies`, `dependentSchemas`, `dependentRequired`) → _Ignored_.
-- **Pattern matching** (`patternProperties`, `propertyNames`) → _Ignored/Simplified_.
+- **Tuple schemas** (`items: [A, B, C]`) → Unsupported.
+- **Conditionals** (`if` / `then` / `else`) → Ignored.
+- **Dependencies** (`dependencies`, `dependentSchemas`, `dependentRequired`) → Ignored.
+- **Pattern matching** (`patternProperties`, `propertyNames`) → Ignored or simplified.
 - **Remote `$ref` resolution** → Only local fragments (`#/...`) are supported.
-- **Number literal enums** → Collapse to `number`.
-- **Exclusive constraints** → Cannot be enforced, only documented via comments.
+- **Number literal enums** → Fall back to `number`.
+- **Exclusive constraints** → Cannot be enforced by the Luau type checker; documented via doc-comments only.
 
 ---
 
-## 💡 Troubleshooting & FAQ
+## Troubleshooting & FAQ
 
-### “Why is my numeric enum turned into `number`?”
+### Why is my numeric enum turned into `number`?
 
-Luau does not support numeric literal types (e.g., `1 | 2 | 3`). Numeric enums from JSON Schema must degrade to the base type `number`.
+Luau does not support numeric literal types (e.g., `1 | 2 | 3`). Numeric enums in JSON Schema degrade to `number`.
 
-### “Why does my object turn into `{ [string]: any }`?”
+### Why does my object turn into `{ [string]: any }`?
 
-This typically happens when the schema is an object that allows arbitrary properties but does not explicitly declare any of its own (`properties` is absent or empty, and `additionalProperties` is the default `true`).
+This occurs when the schema represents an object that permits arbitrary properties without declaring specific properties (`properties` is absent or empty, and `additionalProperties` defaults to `true`).
 
-### “Why is a type inlined instead of exported?”
+### Why is a type inlined instead of exported?
 
-Only types resolved via a `$ref` to a root-level definition (`#/definitions/Name` or `#/$defs/Name`) are exported as named types. All other complex types (like nested objects or arrays) are intentionally inlined for conciseness.
+Only types resolved via `$ref` to a root-level definition (`#/definitions/Name` or `#/$defs/Name`) are exported as named types. Other complex nested types are inlined for conciseness.
 
 ---
 
-## 📦 API Reference (Rust)
+## API Reference (Rust)
 
 ### `convert_schema(&str) -> Result<String>`
 
-The simplest function. Parses the JSON Schema string and returns the resulting Luau type definitions.
+Parses the raw JSON Schema string and returns the generated Luau type definitions.
 
 ### `SchemaConverter`
 
-For advanced usage (e.g., reusing definitions across multiple calls):
+Used for advanced configurations or maintaining state across multiple conversions:
 
 ```rust
 let mut converter = SchemaConverter::new();
 let luau = converter.convert(&schema)?;
-let luau = converter.convert_with_name(&schema, "MyType")?;
+let luau_with_name = converter.convert_with_name(&schema, "MyType")?;
 ```
 
 ---
 
-## ⚠️ Performance Notes
+## Development
 
-- The converter is designed for **codegeneration**, not high-frequency runtime use.
-- `$ref` resolution is single-pass and only supports local fragments.
+This repository uses [`devenv`](https://devenv.sh/) to manage the development environment, tooling, and pre-commit hooks.
+
+### Getting Started
+
+1. Install [`nix`](https://nixos.org/) and [`devenv`](https://devenv.sh/).
+2. Activate the shell environment:
+
+```bash
+devenv shell
+```
+
+### Included Tools & Hooks
+
+The environment provides pre-configured tools including `cargo-dist` for packaging and `treefmt` for code formatting.
+
+Automatic pre-commit checks will enforce:
+
+- **Code Formatting:** `nixfmt`, `taplo` (TOML), `yamlfmt`, `rustfmt`, and `markdownlint`.
+- **Static Analysis & Safety:** `clippy`, `actionlint` (GitHub Actions), `typos`, `deadnix`, and `statix`.
+- **Hygiene Checks:** Line ending normalization, merge conflict checks, trailing whitespace cleanup, and commit message checking (`commitizen`).
+
+To run formatting manually:
+
+```bash
+treefmt
+```
 
 ---
 
-## 📄 License
+## License
 
-[MIT](LICENSE) License
+[MIT](LICENSE)
