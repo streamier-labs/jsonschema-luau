@@ -5,10 +5,11 @@ edition = "2024"
 authors = ["Amir Farzamnia <amirfarzamnia@proton.me>"]
 license = "MIT"
 description = "Convert JSON Schemas to Luau type definitions with full support for constraints and advanced schema features."
-repository = "https://github.com/streamier-labs/jsonschema-luau"
-keywords = ["schema", "jsonschema", "luau", "type-generation", "codegen"]
-categories = ["development-tools", "parser-implementations"]
 readme = "README.md"
+homepage = "https://github.com/streamier-labs/jsonschema-luau#readme"
+repository = "https://github.com/streamier-labs/jsonschema-luau"
+categories = ["development-tools", "parser-implementations"]
+keywords = ["schema", "jsonschema", "luau", "type-generation", "codegen"]
 
 [dependencies]
 serde = { version = "1.0.229", features = ["derive"] }
