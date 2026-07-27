@@ -23,4 +23,4 @@ npm-scope = "@streamier"
 # Path that installers should place binaries in
 install-path = "CARGO_HOME"
 # Whether to install an updater program
-install-updater = false
+install-updater = true
