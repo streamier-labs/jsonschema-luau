@@ -29,7 +29,7 @@
 //! jsonschema-luau schema.json -t MyType
 //! ```
 
-use json_schema_to_luau::cli;
+use jsonschema_luau::cli;
 
 fn main() {
     if let Err(e) = cli::run() {

@@ -1,6 +1,6 @@
 //! Unit tests for the schema parser.
 
-use json_schema_to_luau::{JsonSchema, SchemaParser, Type};
+use jsonschema_luau::{JsonSchema, SchemaParser, Type};
 
 #[test]
 fn test_parse_simple_object() {
@@ -117,7 +117,7 @@ fn test_parse_with_custom_type_name() {
     }"#;
 
     let schema: JsonSchema = serde_json::from_str(schema_json).expect("Failed to parse schema");
-    let config = json_schema_to_luau::IrConfig::with_root_type_name("Person");
+    let config = jsonschema_luau::IrConfig::with_root_type_name("Person");
     let mut parser = SchemaParser::with_config(config);
     let module = parser.parse(&schema).expect("Failed to convert to IR");
 

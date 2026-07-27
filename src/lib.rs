@@ -9,7 +9,7 @@
 //! # Example
 //!
 //! ```rust
-//! use json_schema_to_luau::convert_schema;
+//! use jsonschema_luau::convert_schema;
 //!
 //! let schema = r#"{
 //!     "type": "object",
@@ -53,7 +53,7 @@ pub use schema::JsonSchema;
 /// # Example
 ///
 /// ```rust
-/// use json_schema_to_luau::convert_schema;
+/// use jsonschema_luau::convert_schema;
 ///
 /// let schema = r#"{"type": "object", "properties": {"name": {"type": "string"}}}"#;
 /// let luau = convert_schema(schema).unwrap();
@@ -81,7 +81,7 @@ pub fn convert_schema(json_schema: &str) -> Result<String> {
 /// # Example
 ///
 /// ```rust
-/// use json_schema_to_luau::convert_schema_with_name;
+/// use jsonschema_luau::convert_schema_with_name;
 ///
 /// let schema = r#"{"type": "object", "properties": {"name": {"type": "string"}}}"#;
 /// let luau = convert_schema_with_name(schema, "Person").unwrap();

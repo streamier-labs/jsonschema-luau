@@ -1,6 +1,6 @@
 //! Unit tests for the Luau code generator.
 
-use json_schema_to_luau::{LuauConfig, LuauGenerator, Type, TypeDef, TypeModule};
+use jsonschema_luau::{LuauConfig, LuauGenerator, Type, TypeDef, TypeModule};
 
 #[test]
 fn test_generator_simple_type() {

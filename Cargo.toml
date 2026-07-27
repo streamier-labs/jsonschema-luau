@@ -23,7 +23,7 @@ name = "jsonschema-luau"
 path = "src/main.rs"
 
 [lib]
-name = "json_schema_to_luau"
+name = "jsonschema_luau"
 path = "src/lib.rs"
 
 # The profile that 'dist' will build with

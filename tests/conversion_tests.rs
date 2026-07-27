@@ -1,6 +1,6 @@
 //! Unit tests for the conversion functions.
 
-use json_schema_to_luau::{convert_schema, convert_schema_with_name};
+use jsonschema_luau::{convert_schema, convert_schema_with_name};
 
 #[test]
 fn test_convert_simple_schema() {

@@ -110,7 +110,7 @@ jsonschema-luau schema.json --type-name MyCustomType
 ### Rust Library
 
 ```rust
-use json_schema_to_luau::convert_schema;
+use jsonschema_luau::convert_schema;
 
 fn main() {
     let json_schema = r#"{

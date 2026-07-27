@@ -1,6 +1,6 @@
 //! Unit tests for IR (Intermediate Representation) types.
 
-use json_schema_to_luau::{IrConfig, Type, TypeDef, TypeModule};
+use jsonschema_luau::{IrConfig, Type, TypeDef, TypeModule};
 
 #[test]
 fn test_ir_config_default() {
