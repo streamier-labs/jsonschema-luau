@@ -107,6 +107,14 @@ cat schema.json | jsonschema-luau - -o types.luau
 jsonschema-luau schema.json --type-name MyCustomType
 ```
 
+#### Keeping `jsonschema-luau` Up-to-Date
+
+If you installed via the shell install script, run the updater at any time:
+
+```bash
+jsonschema-luau-update
+```
+
 ### Rust Library
 
 ```rust
