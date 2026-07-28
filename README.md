@@ -43,13 +43,13 @@ You can install pre-built binaries directly using the interactive install script
 **Linux & macOS:**
 
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf [https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.sh](https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.sh) | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.sh | sh
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-powershell -c "irm [https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.ps1](https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.ps1) | iex"
+powershell -ExecutionPolicy Bypass -c "irm https://github.com/streamier-labs/jsonschema-luau/releases/latest/download/jsonschema-luau-installer.ps1 | iex"
 ```
 
 ### Toolchain Managers (Mise / Rokit)
