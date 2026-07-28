@@ -32,11 +32,18 @@
 
   treefmt = {
     enable = true;
-    config.programs = {
-      nixfmt.enable = true;
-      taplo.enable = true;
-      yamlfmt.enable = true;
-      rustfmt.enable = true;
+    config = {
+      programs = {
+        nixfmt.enable = true;
+        taplo.enable = true;
+        yamlfmt.enable = true;
+        rustfmt.enable = true;
+      };
+      # Auto-generated files
+      settings.excludes = [
+        ".github/workflows/release.yml"
+        "dist-workspace.toml"
+      ];
     };
   };
 
@@ -73,6 +80,7 @@
     # Auto-generated files
     excludes = [
       "^\\.github/workflows/release\\.yml$"
+      "^dist-workspace\\.toml$"
     ];
   };
 }
